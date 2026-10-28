@@ -125,7 +125,7 @@ body.locked{overflow:hidden;height:100%}
 /* ================= Page ================= */
 .band{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .hero{position:relative;overflow-x:clip;display:flex;flex-direction:column;align-items:center;padding-block:var(--hero-top,120px) 10px}
-.hero .frame{z-index:2}
+.hero .frame{z-index:2;margin:0;flex-shrink:0}  /* auto margins collapse to 0 when the frame is wider than the screen, which pushed it right; let align-items center it */
 .frame{position:relative;margin:0 auto}
 .frame-img{display:block;width:100%;height:auto;filter:drop-shadow(0 18px 22px rgba(20,0,5,.45))}
 .hero-card{position:absolute;left:4.15%;top:8.5%;width:88.44%;height:83%}
@@ -925,7 +925,7 @@ function sizeHero(){
   const top = sizeLustra()*.9;   // the card hangs just below the chandelier
   root.style.setProperty("--hero-top", top + "px");
   const fw = Math.min(vw - 32, 440)/.8844;
-  $("heroFrame").style.width = fw + "px";
+  Object.assign($("heroFrame").style, {width:fw+"px", left:fw*(.5 - .0415 - .8844/2)+"px"});   // the paper sits a little left of centre in ftesa.png
   hero.style.fontSize = fw*.8844/19.5 + "px";
 }
 function layout(){
